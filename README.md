@@ -2,6 +2,8 @@
 
 Modern GNOME Shell extension to discover and control Elgato Key Light devices directly from the top bar.
 
+![Key Light Controller menu](docs/extension.png)
+
 ## Features
 
 - Auto-discovery on your LAN (Avahi + fallback probes)
@@ -10,10 +12,6 @@ Modern GNOME Shell extension to discover and control Elgato Key Light devices di
 - Temperature slider with device-safe value clamping
 - Live slider label/color feedback while dragging
 - Per-device details panel (IP, MAC, serial, firmware, hardware data)
-
-## Screenshot
-
-![Key Light Controller menu](docs/extension.png)
 
 ## Requirements
 

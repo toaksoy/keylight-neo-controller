@@ -1,4 +1,4 @@
-# Key Light Neo Controller (GNOME Extension)
+# Key Light Controller (GNOME Extension)
 
 Modern GNOME Shell extension to discover and control Elgato Key Light devices directly from the top bar.
 

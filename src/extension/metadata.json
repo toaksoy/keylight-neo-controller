@@ -2,7 +2,10 @@
   "uuid": "keylight-controller@toaksoy",
   "name": "Key Light Controller",
   "description": "Discover and control Elgato Key Light devices from the GNOME top bar.",
-  "version": 1,
+  "version": 2,
   "shell-version": ["45", "46", "47"],
-  "url": "https://github.com/toaksoy/keylight-controller"
+  "url": "https://github.com/toaksoy/keylight-controller",
+  "donations": {
+    "github": "toaksoy"
+  }
 }

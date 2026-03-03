@@ -1,5 +1,5 @@
 import GLib from 'gi://GLib';
-import Soup from 'gi://Soup?version=3.0';
+import Soup from 'gi://Soup';
 
 import {
     ACCESSORY_INFO_PATH,
@@ -34,7 +34,17 @@ export class ElgatoClient {
         });
     }
 
+    destroy() {
+        if (!this._session)
+            return;
+        this._session.abort();
+        this._session = null;
+    }
+
     async _requestJson(method, path, payload) {
+        if (!this._session)
+            throw new Error('Session is closed');
+
         const message = Soup.Message.new(method, `${this._baseUrl}${path}`);
         if (payload !== null) {
             const raw = this._textEncoder.encode(JSON.stringify(payload));

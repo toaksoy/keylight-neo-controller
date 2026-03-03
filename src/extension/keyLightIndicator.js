@@ -50,7 +50,6 @@ class KeyLightIndicator extends PanelMenu.Button {
         this._pollSourceId = 0;
         this._discoveryTimeoutId = 0;
         this._probedDiscoveryAddresses = new Set();
-        this._isDestroyed = false;
 
         this.add_child(new St.Icon({
             icon_name: 'display-brightness-symbolic',
@@ -81,8 +80,6 @@ class KeyLightIndicator extends PanelMenu.Button {
     }
 
     destroy() {
-        this._isDestroyed = true;
-
         if (this._pollSourceId) {
             GLib.source_remove(this._pollSourceId);
             this._pollSourceId = 0;
@@ -93,8 +90,10 @@ class KeyLightIndicator extends PanelMenu.Button {
         if (this._discovery)
             this._discovery.stop();
 
-        for (const device of this._devices.values())
+        for (const device of this._devices.values()) {
             this._clearPendingTimeouts(device);
+            device.client?.destroy?.();
+        }
         this._devices.clear();
 
         super.destroy();
@@ -392,6 +391,8 @@ class KeyLightIndicator extends PanelMenu.Button {
             });
         } catch (_error) {
             // Expected for most non-Key-Light neighbors; ignore quietly.
+        } finally {
+            client.destroy();
         }
     }
 
@@ -577,6 +578,7 @@ class KeyLightIndicator extends PanelMenu.Button {
             return;
 
         this._clearPendingTimeouts(device);
+        device.client?.destroy?.();
         device.item.destroy();
         this._devices.delete(deviceId);
 
@@ -818,9 +820,6 @@ class KeyLightIndicator extends PanelMenu.Button {
     }
 
     _pollAllDevices() {
-        if (this._isDestroyed)
-            return GLib.SOURCE_REMOVE;
-
         for (const deviceId of this._devices.keys())
             this._refreshDevice(deviceId);
 
